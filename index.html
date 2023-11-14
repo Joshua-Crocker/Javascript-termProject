@@ -1,21 +1,27 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Mine Sweeper</title>
-        <link rel="stylesheet" href="styles.css">
-        <script src="main.js" defer></script>
-    </head>
-    <body>
-        <div id="selections">
-            <button id="easy">Easy</button>
-            <button id="medium">Medium</button>
-            <button id="hard">Hard</button>
-            <button id="start">Start</button>
-        </div>
-        <div id="buttonGrid">
-            
-        </div>
-    </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mine Sweeper</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="main.js" defer></script>
+</head>
+<body>
+    <div id="title">
+        <h1>Mine Sweeper</h1>
+    </div>
+    <div id="selections">
+        <button id="easy">Easy</button>
+        <button id="medium">Medium</button>
+        <button id="hard">Hard</button>
+        <button id="start">Start</button>
+    </div>
+    <div id="timer">
+        <labelfor="timerText" style="font-size: 18px;">Time Elapsed: </label>
+        <p id="timerText"></p>
+    </div>
+    <div id="buttonGrid"></div>
+    <div id="win-lose"></div>
+</body>
 </html>
