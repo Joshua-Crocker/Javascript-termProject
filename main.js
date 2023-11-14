@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let start = $("#start");
     let playArea = $("#buttonGrid");
     let selections = $("#selections");
+    let tileCounter = $("#tileCounter");
 
     // Variables for mines and grid size
     var mines = 0;
@@ -63,8 +64,9 @@ document.addEventListener("DOMContentLoaded", () => {
             // Check if the clicked button has a value other than zero or mine
             if (evt.target.value !== '0' && evt.target.value !== '-1') {
                 evt.target.textContent = evt.target.value;
+                evt.target.classList.add('revealed');
                 numberOfTilesRevealed++;
-                console.log(`buttonClickHandler ${numberOfTilesRevealed}`);
+                console.log(`buttonClickHandler ${numberOfTilesRevealed} at ${evt.target.className}`);
                 winConditionCheck();
             } else {
                 revealZeros(evt.target);
@@ -79,7 +81,7 @@ const revealZeros = (button) => {
         button.style.backgroundColor = "#C0C0C0"; // Fix the syntax here
         button.classList.add('revealed');
         numberOfTilesRevealed++;
-        console.log(`revealZeros ${numberOfTilesRevealed}`);
+        console.log(`revealZeros ${numberOfTilesRevealed} at ${button.className}`);
         winConditionCheck();
 
         // Get the coordinates of the clicked button
@@ -108,12 +110,12 @@ const revealZeros = (button) => {
                 revealZeros(adjacentButton);
             }
         }
-    } else if (button.value > 0 && !button.classList.contains('revealed')) {
+    } else if (parseInt(button.value) > 0 && !button.classList.contains('revealed')) {
         // Display the number for non-zero values
         button.textContent = button.value;
         button.classList.add('revealed');
         numberOfTilesRevealed++;
-        console.log(`revealZeros number tile ${numberOfTilesRevealed}`);
+        console.log(`revealZeros number tile ${numberOfTilesRevealed} at ${button.className}`);
         winConditionCheck();
     }
 }
