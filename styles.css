@@ -37,6 +37,22 @@ button {
     align-items: center;
 }
 
+#tileCounterDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 #timerText {
     text-align: center;
+}
+
+#tileCounter {
+    text-align: center;
+}
+
+#flagCounterDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

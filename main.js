@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Variable for counting the number of tiles revealed
     var numberOfTilesRevealed = 0;
+    var numberOfFlagsUsed = 0;
 
     // Function to generate an array representing the game board
     const generateArray = () => {
@@ -67,6 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 evt.target.classList.add('revealed');
                 numberOfTilesRevealed++;
                 console.log(`buttonClickHandler ${numberOfTilesRevealed} at ${evt.target.className}`);
+                tileCounter.textContent = numberOfTilesRevealed;
                 winConditionCheck();
             } else {
                 revealZeros(evt.target);
@@ -77,11 +79,12 @@ document.addEventListener("DOMContentLoaded", () => {
 // Function to reveal zeros and their adjacent zeros using recursion
 const revealZeros = (button) => {
     if (button.value === '0' && !button.classList.contains('revealed')) {
-        button.textContent = ''; // Clear the content for zero values
-        button.style.backgroundColor = "#C0C0C0"; // Fix the syntax here
+        button.textContent = '';
+        button.style.backgroundColor = "#C0C0C0"; 
         button.classList.add('revealed');
         numberOfTilesRevealed++;
         console.log(`revealZeros ${numberOfTilesRevealed} at ${button.className}`);
+        tileCounter.textContent = numberOfTilesRevealed;
         winConditionCheck();
 
         // Get the coordinates of the clicked button
@@ -116,17 +119,19 @@ const revealZeros = (button) => {
         button.classList.add('revealed');
         numberOfTilesRevealed++;
         console.log(`revealZeros number tile ${numberOfTilesRevealed} at ${button.className}`);
+        tileCounter.textContent = numberOfTilesRevealed;
         winConditionCheck();
     }
 }
 
 
     const flagATile = (evt) => {
-        if (!evt.target.classList.contains('revealed') || !evt.target.classList.contains('flagged')) {
+        if (evt.target.classList.contains('revealed') || evt.target.classList.contains('flagged')) {
+
+        } else {
             evt.target.textContent = '🚩';
             evt.target.classList.add('flagged');
             winConditionCheck();
-
         }
     }
 
@@ -163,7 +168,6 @@ const revealZeros = (button) => {
                         }
                     }
                 }
-                // buttons[i].textContent = '?';
                 if (buttons[i].value !== '-1') {
                     buttons[i].value = adjacentMines;
                 } else {
@@ -188,6 +192,8 @@ const revealZeros = (button) => {
                 tile.addEventListener('contextmenu', (event) => {
                     flagATile(event); // Pass the event to flagATile function
                     event.preventDefault();
+                    numberOfFlagsUsed++;
+                    $("#flagCounter").textContent = numberOfFlagsUsed;
                 });
                 playArea.appendChild(tile);
             }
@@ -216,12 +222,15 @@ const revealZeros = (button) => {
         mines = 0;
         size = 0;
         numberOfTilesRevealed = 0;
+        numberOfFlagsUsed = 0;
 
         // Remove existing buttons and Reset button
         playArea.innerHTML = "";
         $("#win-lose").innerHTML = "";
         showSelections();
         resetTimer();
+        tileCounter.textContent = "";
+        $("#flagCounter").textContent = "";
     }
 
     // Function to display reset button on game loss
@@ -252,10 +261,14 @@ const revealZeros = (button) => {
 
     // Function to start the game
     const startGame = () => {
-        const array = generateArray();
-        displayGrid(array);
-        displayNumbersOnGrid();
-        hideSelections();
+        if (size === 0) {
+            alert("You didnt select a difficulty.");
+        } else if (size > 0) {
+            const array = generateArray();
+            displayGrid(array);
+            displayNumbersOnGrid();
+            hideSelections();
+        }
 
         intervalId = setInterval(() => {
             seconds++;
